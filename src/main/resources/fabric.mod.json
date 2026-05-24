@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "betterloadingscreen",
   "version": "${version}",
-  "name": "BetterLoadingScreen",
+  "name": "Better loading screen",
   "description": "Enjoy a more beautiful loading screen when you load world!",
   "authors": [
     "HuaMouRen"
