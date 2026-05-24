@@ -9,7 +9,8 @@
   ],
   "contact": {
     "homepage": "https://github.com/isHuaMouRen/better-loading-screen-mod",
-    "sources": "https://github.com/isHuaMouRen/better-loading-screen-mod"
+    "sources": "https://github.com/isHuaMouRen/better-loading-screen-mod",
+    "issues": "https://github.com/isHuaMouRen/better-loading-screen-mod/issues"
   },
   "license": "MIT",
   "icon": "assets/betterloadingscreen/icon.png",
