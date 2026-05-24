@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "betterloadingscreen",
+  "version": "${version}",
+  "name": "BetterLoadingScreen",
+  "description": "description",
+  "authors": [
+    "HuaMouRen"
+  ],
+  "contact": {
+    "homepage": "https://github.com/isHuaMouRen",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "GPL-v3",
+  "icon": "assets/betterloadingscreen/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.mouren.better_loading_screen.BetterLoadingScreen"
+    ]
+  },
+  "mixins": [
+    "betterloadingscreen.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.2",
+    "minecraft": "~26.1.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}

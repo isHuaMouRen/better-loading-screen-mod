@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "me.mouren.better_loading_screen.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "LevelLoadingScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
