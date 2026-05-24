@@ -3,15 +3,15 @@
   "id": "betterloadingscreen",
   "version": "${version}",
   "name": "BetterLoadingScreen",
-  "description": "description",
+  "description": "Enjoy a more beautiful loading screen when you load world!",
   "authors": [
     "HuaMouRen"
   ],
   "contact": {
-    "homepage": "https://github.com/isHuaMouRen",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/isHuaMouRen/better-loading-screen-mod",
+    "sources": "https://github.com/isHuaMouRen/better-loading-screen-mod"
   },
-  "license": "GPL-v3",
+  "license": "MIT",
   "icon": "assets/betterloadingscreen/icon.png",
   "environment": "*",
   "entrypoints": {
