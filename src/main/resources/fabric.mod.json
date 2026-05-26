@@ -12,7 +12,7 @@
     "sources": "https://github.com/isHuaMouRen/better-loading-screen-mod",
     "issues": "https://github.com/isHuaMouRen/better-loading-screen-mod/issues"
   },
-  "license": "MIT",
+  "license": "GPL-v3",
   "icon": "assets/betterloadingscreen/icon.png",
   "environment": "*",
   "entrypoints": {
