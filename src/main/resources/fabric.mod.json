@@ -10,7 +10,8 @@
   "contact": {
     "homepage": "https://github.com/isHuaMouRen/better-loading-screen-mod",
     "sources": "https://github.com/isHuaMouRen/better-loading-screen-mod",
-    "issues": "https://github.com/isHuaMouRen/better-loading-screen-mod/issues"
+    "issues": "https://github.com/isHuaMouRen/better-loading-screen-mod/issues",
+    "modrinth": "https://modrinth.com/mod/better-loading-screen-mod"
   },
   "license": "GPL-v3",
   "icon": "assets/betterloadingscreen/icon.png",
