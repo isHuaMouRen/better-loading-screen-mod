@@ -32,6 +32,10 @@ processResources {
 	filesMatching("fabric.mod.json") {
 		expand "version": version
 	}
+
+	from(rootProject.file("CHANGELOG.md")){
+		into("")
+	}
 }
 
 tasks.withType(JavaCompile).configureEach {
