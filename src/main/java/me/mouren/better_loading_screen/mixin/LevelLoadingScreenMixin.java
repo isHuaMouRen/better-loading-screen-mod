@@ -70,7 +70,7 @@ public class LevelLoadingScreenMixin extends Screen {
         int currentFrame = (int) ((System.currentTimeMillis() / 40) % totalFrames);
         int textureV = currentFrame * animSize;
 
-        net.minecraft.resources.Identifier animationTextureIdentifier = net.minecraft.resources.Identifier.fromNamespaceAndPath(BetterLoadingScreen.MOD_ID, "textures/gui/loading_animation.png");
+        net.minecraft.resources.ResourceLocation animationTextureIdentifier = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(BetterLoadingScreen.MOD_ID, "textures/gui/loading_animation.png");
 
         float u0 = 0.0F;
         float u1 = 1.0F;
