@@ -41,7 +41,7 @@ public class LevelLoadingScreenMixin extends Screen {
         int gradientHeight = 100;
         int gradientTop = this.height - gradientHeight;
 
-        graphics.fillGradient(0, gradientTop, right, bottom, 0x00000000, 0xCC000000);
+        graphics.fillGradient(0, gradientTop, right, bottom, 0x00000000, 0x80000000);
 
 
         //进度条
