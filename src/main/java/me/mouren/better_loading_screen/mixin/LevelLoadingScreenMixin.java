@@ -46,7 +46,6 @@ public class LevelLoadingScreenMixin extends Screen {
 
         //进度条
         if (this.loadTracker != null && this.loadTracker.hasProgress()) {
-            graphics.fill(left, top, right, bottom, 0x80000000);
             int progressBarRight = (int) (this.smoothedProgress * (float) this.width);
             if (progressBarRight > 0) {
                 graphics.fill(left, top, progressBarRight, bottom, 0xFF00FF00);
