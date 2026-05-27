@@ -4,8 +4,9 @@ import me.mouren.better_loading_screen.BetterLoadingScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.multiplayer.LevelLoadTracker;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.progress.StoringChunkProgressListener;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,10 +16,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LevelLoadingScreen.class)
 public class LevelLoadingScreenMixin extends Screen {
 
-    @Shadow
+    // 1.21.6不支持
+    /*@Shadow
     private LevelLoadTracker loadTracker;
     @Shadow
-    private float smoothedProgress;
+    private float smoothedProgress;*/
+    @Final
+    @Shadow
+    private StoringChunkProgressListener progressListener;
+
 
     protected LevelLoadingScreenMixin(Component title) {
         super(title);
@@ -28,6 +34,8 @@ public class LevelLoadingScreenMixin extends Screen {
     private void onRender(GuiGraphics graphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         // 拦截原版渲染
         ci.cancel();
+
+        int nowPercent = this.progressListener.getProgress();
 
         // 基础布局
         int barHeight = 4;
@@ -43,8 +51,8 @@ public class LevelLoadingScreenMixin extends Screen {
         graphics.fillGradient(0, gradientTop, right, bottom, 0x00000000, 0x80000000);
 
         // 进度条绘制
-        if (this.loadTracker != null && this.loadTracker.hasProgress()) {
-            int progressBarRight = (int) (this.smoothedProgress * (float) this.width);
+        if (nowPercent != 0) {
+            int progressBarRight = (int) (((float) nowPercent / 100F) * this.width);
             if (progressBarRight > 0) {
                 graphics.fill(left, top, progressBarRight, bottom, 0xFF00FF00);
             }
@@ -101,9 +109,8 @@ public class LevelLoadingScreenMixin extends Screen {
         // ==========================================
         // 百分比文字
         // ==========================================
-        if (this.loadTracker != null && this.loadTracker.hasProgress()) {
-            int progressPercent = net.minecraft.util.Mth.floor(this.loadTracker.serverProgress() * 100.0F);
-            String percentString = progressPercent + "%";
+        if (nowPercent != 0) {
+            String percentString = nowPercent + "%";
 
             int rawTextWidth = this.font.width(percentString);
             int percentX = animX - rawTextWidth - 6;
