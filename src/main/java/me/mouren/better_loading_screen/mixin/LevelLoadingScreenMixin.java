@@ -1,7 +1,7 @@
 package me.mouren.better_loading_screen.mixin;
 
 import me.mouren.better_loading_screen.BetterLoadingScreen;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.LevelLoadTracker;
@@ -24,27 +24,25 @@ public class LevelLoadingScreenMixin extends Screen {
         super(title);
     }
 
-    @Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
-    private void onExtractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
+    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
+    private void onRender(GuiGraphics graphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         // 拦截原版渲染
         ci.cancel();
 
-        // 基础布局数据
+        // 基础布局
         int barHeight = 4;
         int left = 0;
         int right = this.width;
         int bottom = this.height;
         int top = bottom - barHeight;
 
-
-        //黑色渐变背景
+        // 渐变背景
         int gradientHeight = 100;
         int gradientTop = this.height - gradientHeight;
 
         graphics.fillGradient(0, gradientTop, right, bottom, 0x00000000, 0xCC000000);
 
-
-        //进度条
+        // 进度条绘制
         if (this.loadTracker != null && this.loadTracker.hasProgress()) {
             graphics.fill(left, top, right, bottom, 0x80000000);
             int progressBarRight = (int) (this.smoothedProgress * (float) this.width);
@@ -53,7 +51,7 @@ public class LevelLoadingScreenMixin extends Screen {
             }
         }
 
-        // 参数
+        // 缩放尺寸定义
         float scale = 3F;
         int scaledTextHeight = (int) (9 * scale);
         int textY = top - scaledTextHeight - 5;
@@ -92,28 +90,27 @@ public class LevelLoadingScreenMixin extends Screen {
 
 
         // ==========================================
-        // 绘制 LOADING
+        // 左侧 LOADING
         // ==========================================
         graphics.pose().pushMatrix();
         graphics.pose().translate(6.0F, (float) textY);
         graphics.pose().scale(scale, scale);
-        graphics.text(this.font, "§lLOADING...", 0, 0, 0xFFFFFFFF, true); //粗体
+        graphics.drawString(this.font, "§lLOADING...", 0, 0, 0xFFFFFFFF, true);
         graphics.pose().popMatrix();
 
 
         // ==========================================
-        // 绘制百分比
+        // 百分比文字
         // ==========================================
         if (this.loadTracker != null && this.loadTracker.hasProgress()) {
             int progressPercent = net.minecraft.util.Mth.floor(this.loadTracker.serverProgress() * 100.0F);
-            String percentString = progressPercent + "%"; // 去掉了 "§l"
+            String percentString = progressPercent + "%";
 
             int rawTextWidth = this.font.width(percentString);
             int percentX = animX - rawTextWidth - 6;
             int normalTextY = textY + 18;
 
-            // 直接渲染
-            graphics.text(this.font, percentString, percentX, normalTextY, 0xFFFFFFFF, true);
+            graphics.drawString(this.font, percentString, percentX, normalTextY, 0xFFFFFFFF, true);
         }
     }
 }
