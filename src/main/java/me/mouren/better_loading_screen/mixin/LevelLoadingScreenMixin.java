@@ -4,6 +4,7 @@ import me.mouren.better_loading_screen.BetterLoadingScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.progress.StoringChunkProgressListener;
 import org.spongepowered.asm.mixin.Final;
@@ -11,6 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LevelLoadingScreen.class)
@@ -30,10 +32,47 @@ public class LevelLoadingScreenMixin extends Screen {
         super(title);
     }
 
-    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
-    private void onRender(GuiGraphics graphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+
+    @Redirect(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/screens/LevelLoadingScreen;renderChunks(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/server/level/progress/StoringChunkProgressListener;IIII)V"
+            )
+    )
+    private void cancelRenderChunks(
+            GuiGraphics guiGraphics,
+            StoringChunkProgressListener listener,
+            int i,
+            int j,
+            int k,
+            int l
+    ) {
+        //什么也不做，取消矩阵进度
+    }
+
+    @Redirect(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/GuiGraphics;drawCenteredString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V"
+            )
+    )
+    private void cancelDrawString(
+            GuiGraphics guiGraphics,
+            net.minecraft.client.gui.Font font,
+            Component component,
+            int x,
+            int y,
+            int color
+    ) {
+        // 什么都不做，取消信息显示
+    }
+
+    @Inject(method = "render", at = @At("TAIL"))
+    private void onRender(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo ci) {
         // 拦截原版渲染
-        ci.cancel();
+        //ci.cancel(); 1.21.5cancel后不渲染全景图
 
         int nowPercent = this.progressListener.getProgress();
 
@@ -48,13 +87,13 @@ public class LevelLoadingScreenMixin extends Screen {
         int gradientHeight = 100;
         int gradientTop = this.height - gradientHeight;
 
-        graphics.fillGradient(0, gradientTop, right, bottom, 0x00000000, 0x80000000);
+        guiGraphics.fillGradient(0, gradientTop, right, bottom, 0x00000000, 0x80000000);
 
         // 进度条绘制
         if (nowPercent != 0) {
             int progressBarRight = (int) (((float) nowPercent / 100F) * this.width);
             if (progressBarRight > 0) {
-                graphics.fill(left, top, progressBarRight, bottom, 0xFF00FF00);
+                guiGraphics.fill(left, top, progressBarRight, bottom, 0xFF00FF00);
             }
         }
 
@@ -70,9 +109,9 @@ public class LevelLoadingScreenMixin extends Screen {
         // ==========================================
         // 绘制动态贴图
         // ==========================================
-        graphics.pose().pushMatrix();
-        graphics.pose().translate((float) animX, (float) textY);
-        graphics.pose().scale(scale, scale);
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate((float) animX, (float) textY, 0.0F);
+        guiGraphics.pose().scale(scale, scale, 1.0F);
 
         int totalFrames = 91;
         int currentFrame = (int) ((System.currentTimeMillis() / 40) % totalFrames);
@@ -85,25 +124,29 @@ public class LevelLoadingScreenMixin extends Screen {
         float v0 = (float) textureV / 910.0F;
         float v1 = (float) (textureV + animSize) / 910.0F;
 
-        graphics.blit(
+        guiGraphics.blit(
+                RenderType::guiTextured,
                 animationTextureIdentifier,
                 0, 0,
-                animSize, animSize,
-                u0, u1,
-                v0, v1
+                0,
+                textureV,
+                animSize,
+                animSize,
+                animSize,
+                910
         );
 
-        graphics.pose().popMatrix();
+        guiGraphics.pose().popPose();
 
 
         // ==========================================
         // 左侧 LOADING
         // ==========================================
-        graphics.pose().pushMatrix();
-        graphics.pose().translate(6.0F, (float) textY);
-        graphics.pose().scale(scale, scale);
-        graphics.drawString(this.font, "§lLOADING...", 0, 0, 0xFFFFFFFF, true);
-        graphics.pose().popMatrix();
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(6.0F, (float) textY, 0.0F);
+        guiGraphics.pose().scale(scale, scale, 1.0F);
+        guiGraphics.drawString(this.font, "§lLOADING...", 0, 0, 0xFFFFFFFF, true);
+        guiGraphics.pose().popPose();
 
 
         // ==========================================
@@ -116,7 +159,7 @@ public class LevelLoadingScreenMixin extends Screen {
             int percentX = animX - rawTextWidth - 6;
             int normalTextY = textY + 18;
 
-            graphics.drawString(this.font, percentString, percentX, normalTextY, 0xFFFFFFFF, true);
+            guiGraphics.drawString(this.font, percentString, percentX, normalTextY, 0xFFFFFFFF, true);
         }
     }
 }
