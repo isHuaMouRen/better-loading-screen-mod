@@ -119,11 +119,6 @@ public class LevelLoadingScreenMixin extends Screen {
 
         net.minecraft.resources.ResourceLocation animationTextureIdentifier = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(BetterLoadingScreen.MOD_ID, "textures/gui/loading_animation.png");
 
-        float u0 = 0.0F;
-        float u1 = 1.0F;
-        float v0 = (float) textureV / 910.0F;
-        float v1 = (float) (textureV + animSize) / 910.0F;
-
         guiGraphics.blit(
                 RenderType::guiTextured,
                 animationTextureIdentifier,
