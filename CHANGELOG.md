@@ -2,10 +2,8 @@
 
 ## 1.3.0
 
-- **Mod信息**
-    - 制作人员添加 `Gemini` 和 `ChatGPT`
 - **兼容性**
-    - 兼容 Minecraft `1.21.5`
+    - 兼容 Minecraft `1.21.x`
 
 ## 1.2.0
 
