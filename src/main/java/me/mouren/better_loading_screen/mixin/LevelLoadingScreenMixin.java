@@ -4,7 +4,6 @@ import me.mouren.better_loading_screen.BetterLoadingScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.progress.StoringChunkProgressListener;
 import org.spongepowered.asm.mixin.Final;
@@ -120,7 +119,6 @@ public class LevelLoadingScreenMixin extends Screen {
         net.minecraft.resources.ResourceLocation animationTextureIdentifier = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(BetterLoadingScreen.MOD_ID, "textures/gui/loading_animation.png");
 
         guiGraphics.blit(
-                RenderType::guiTextured,
                 animationTextureIdentifier,
                 0, 0,
                 0,

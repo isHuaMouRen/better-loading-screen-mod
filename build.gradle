@@ -75,5 +75,10 @@ publishing {
 		// Notice: This block does NOT have the same function as the block in the top level.
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
+		mavenCentral()
+
+		maven { url 'https://maven.fabricmc.net/' }
+
+		maven { url 'https://maven.aliyun.com/repository/public/' }
 	}
 }
