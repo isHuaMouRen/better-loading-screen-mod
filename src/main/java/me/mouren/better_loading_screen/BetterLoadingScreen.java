@@ -19,6 +19,6 @@ public class BetterLoadingScreen implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("Initializing...");
+		LOGGER.info("Initializing Better loading screen...");
 	}
 }
