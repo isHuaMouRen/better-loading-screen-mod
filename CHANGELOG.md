@@ -1,5 +1,9 @@
 # Change log
 
+## 1.3.2
+
+- 升级 Minecraft 版本至 `26.3`
+
 ## 1.3.1
 
 - 升级至 Minecraft版本 `26.2`
