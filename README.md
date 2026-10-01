@@ -8,17 +8,33 @@ _(包含优雅的 LOADING 文本提示、实时进度百分比以及平滑的加
 
 此外，该优化界面同样完美支持玩家在切换维度（如进入下界、末地）时的加载过程，带来全程无缝、统一的视觉体验。
 
-![2](docs/2.png)
-![3](docs/3.png)
+## 依赖
+
+- **必要依赖**
+    - [Cloth Config API](https://modrinth.com/mod/cloth-config): >= 26.3.159
+- **可选依赖**
+    - [Mod Menu](https://modrinth.com/mod/modmenu): >= 21.0.0
+
+如果你不添加 `Mod Menu` 模组，你将无法打开配置页面
+
+---
 
 # Better loading screen
 
-This mod completely reconstructs the vanilla game's traditional world-loading interface, replacing it with a more modern new loading animation and UI.
+This mod completely reconstructs the vanilla game's traditional world-loading interface, replacing it with a more modern
+new loading animation and UI.
 ![1](docs/1.png)
 
 _(Features a clean "LOADING" text, real-time progress percentage, and smooth loading animations)_
 
-Furthermore, this enhanced loading screen seamlessly applies to dimension transitions (e.g., traveling to the Nether or the End), ensuring a consistent and visually pleasing experience throughout your journey.
+Furthermore, this enhanced loading screen seamlessly applies to dimension transitions (e.g., traveling to the Nether or
+the End), ensuring a consistent and visually pleasing experience throughout your journey.
 
-![2](docs/2.png)
-![3](docs/3.png)
+## Dependencies
+
+- **Required Dependencies**
+    - [Cloth Config API](https://modrinth.com/mod/cloth-config): >= 26.3.159
+- **Optional Dependencies**
+    - [Mod Menu](https://modrinth.com/mod/modmenu): >= 21.0.0
+
+If you do not include the `Mod Menu` mod, you will not be able to open the configuration screen.
