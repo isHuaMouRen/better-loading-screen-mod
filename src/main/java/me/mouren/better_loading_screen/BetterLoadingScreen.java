@@ -30,6 +30,6 @@ public class BetterLoadingScreen implements ModInitializer {
 
         ConfigManager.load();
 
-        LOGGER.info("=====Better loading screen initialize conpleted!=====");
+        LOGGER.info("=====Better loading screen initialize completed!=====");
     }
 }
