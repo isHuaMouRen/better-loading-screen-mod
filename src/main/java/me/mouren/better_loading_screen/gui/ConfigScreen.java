@@ -13,17 +13,17 @@ public class ConfigScreen {
 
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
-                .setTitle(Component.literal("Better loading screen"))
+                .setTitle(Component.translatable("string.betterloadingscreen.modname"))
                 .setSavingRunnable(ConfigManager::save);
 
         var general = builder.getOrCreateCategory(
-                Component.literal("General")
+                Component.translatable("string.betterloadingscreen.general")
         );
 
         general.addEntry(
                 builder.entryBuilder()
                         .startBooleanToggle(
-                                Component.literal("Draw background"),
+                                Component.translatable("config.betterloadingscreen.draw_background"),
                                 config.draw_background
                         )
                         .setDefaultValue(true)
