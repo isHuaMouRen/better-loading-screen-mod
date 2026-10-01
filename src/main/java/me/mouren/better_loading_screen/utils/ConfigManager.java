@@ -22,12 +22,13 @@ public final class ConfigManager {
             if (Files.exists(ConfigPath)) {
                 String json = Files.readString(ConfigPath);
                 BetterLoadingScreen.config = GSON.fromJson(json, JsonConfig.class);
+                return;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        JsonConfig config = new JsonConfig();
+        BetterLoadingScreen.config = new JsonConfig();
         save();
     }
 
