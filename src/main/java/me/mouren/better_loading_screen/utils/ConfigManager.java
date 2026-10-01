@@ -17,26 +17,25 @@ public final class ConfigManager {
     private ConfigManager() {
     }
 
-    public static JsonConfig load() {
+    public static void load() {
         try {
             if (Files.exists(ConfigPath)) {
                 String json = Files.readString(ConfigPath);
-                return GSON.fromJson(json, JsonConfig.class);
+                BetterLoadingScreen.config = GSON.fromJson(json, JsonConfig.class);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         JsonConfig config = new JsonConfig();
-        save(config);
-        return config;
+        save();
     }
 
-    public static void save(JsonConfig config) {
+    public static void save() {
         try {
             Files.createDirectories(ConfigPath.getParent());
 
-            String json = GSON.toJson(config);
+            String json = GSON.toJson(BetterLoadingScreen.config);
 
             Files.writeString(ConfigPath, json);
         } catch (IOException e) {
