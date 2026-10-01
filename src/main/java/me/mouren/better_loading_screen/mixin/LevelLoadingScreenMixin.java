@@ -94,10 +94,14 @@ public class LevelLoadingScreenMixin extends Screen {
         // ==========================================
         // 绘制 LOADING
         // ==========================================
+        Component loadingText = Component.literal("§lLOADING...");
+        if (BetterLoadingScreen.config.i18n_loading_text)
+            loadingText = Component.translatable("string.betterloadingscreen.loading");
+
         graphics.pose().pushMatrix();
         graphics.pose().translate(6.0F, (float) textY);
         graphics.pose().scale(scale, scale);
-        graphics.text(this.font, "§lLOADING...", 0, 0, 0xFFFFFFFF, true); //粗体
+        graphics.text(this.font, loadingText, 0, 0, 0xFFFFFFFF, true);
         graphics.pose().popMatrix();
 
 

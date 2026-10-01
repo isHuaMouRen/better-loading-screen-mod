@@ -30,6 +30,16 @@ public class ConfigScreen {
                         .setSaveConsumer(value -> config.draw_background = value)
                         .build()
         );
+        general.addEntry(
+                builder.entryBuilder()
+                        .startBooleanToggle(
+                                Component.translatable("config.betterloadingscreen.i18n_loading_text"),
+                                config.i18n_loading_text
+                        )
+                        .setDefaultValue(false)
+                        .setSaveConsumer(value -> config.i18n_loading_text = value)
+                        .build()
+        );
 
         return builder.build();
     }

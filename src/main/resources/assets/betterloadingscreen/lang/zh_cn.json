@@ -1,5 +1,7 @@
 {
   "config.betterloadingscreen.draw_background": "绘制黑色渐变背景",
+  "config.betterloadingscreen.i18n_loading_text": "本地化加载文本",
   "string.betterloadingscreen.modname": "更好的加载屏幕",
-  "string.betterloadingscreen.general": "通用"
+  "string.betterloadingscreen.general": "通用",
+  "string.betterloadingscreen.loading": "§l加载中..."
 }

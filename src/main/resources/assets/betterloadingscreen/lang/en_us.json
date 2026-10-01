@@ -1,5 +1,8 @@
 {
   "config.betterloadingscreen.draw_background": "Draw a black gradient background.",
+  "config.betterloadingscreen.i18n_loading_text": "Localize loading text",
   "string.betterloadingscreen.modname": "Better loading screen",
-  "string.betterloadingscreen.general": "General"
+  "string.betterloadingscreen.general": "General",
+  "string.betterloadingscreen.loading": "§lLOADING..."
+
 }
