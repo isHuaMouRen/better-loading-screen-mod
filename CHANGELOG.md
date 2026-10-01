@@ -1,5 +1,10 @@
 # Change log
 
+## 1.4.0
+
+- 依赖mod `cloth-config >= 26.3.159` 与 `modmenu >= 21.0.0`
+- 添加了配置支持，可自定义某些内容
+
 ## 1.3.2
 
 - 升级 Minecraft 版本至 `26.3`
