@@ -18,6 +18,9 @@
   "entrypoints": {
     "main": [
       "me.mouren.better_loading_screen.BetterLoadingScreen"
+    ],
+    "modmenu": [
+      "me.mouren.better_loading_screen.ModMenuIntegration"
     ]
   },
   "mixins": [
