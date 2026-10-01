@@ -47,25 +47,25 @@ public class LevelLoadingScreenMixin extends Screen {
             int k,
             int l
     ) {
-        //什么也不做，取消矩阵进度
+        // 什么也不做，取消矩阵进度
     }
 
     @Redirect(
             method = "render",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphics;drawCenteredString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V"
+                    target = "Lnet/minecraft/client/gui/GuiGraphics;drawCenteredString(Lnet/minecraft/client/gui/Font;Ljava/lang/String;III)V"
             )
     )
     private void cancelDrawString(
             GuiGraphics guiGraphics,
             net.minecraft.client.gui.Font font,
-            Component component,
+            String text,
             int x,
             int y,
             int color
     ) {
-        // 什么都不做，取消信息显示
+        // 什么也不做，取消信息显示
     }
 
     @Inject(method = "render", at = @At("TAIL"))
@@ -116,7 +116,7 @@ public class LevelLoadingScreenMixin extends Screen {
         int currentFrame = (int) ((System.currentTimeMillis() / 40) % totalFrames);
         int textureV = currentFrame * animSize;
 
-        net.minecraft.resources.ResourceLocation animationTextureIdentifier = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(BetterLoadingScreen.MOD_ID, "textures/gui/loading_animation.png");
+        net.minecraft.resources.ResourceLocation animationTextureIdentifier = new net.minecraft.resources.ResourceLocation(BetterLoadingScreen.MOD_ID, "textures/gui/loading_animation.png");
 
         guiGraphics.blit(
                 animationTextureIdentifier,
