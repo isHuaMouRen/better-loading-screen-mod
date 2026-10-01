@@ -1,5 +1,5 @@
 {
-  "config.betterloadingscreen.draw_background": "Draw background",
+  "config.betterloadingscreen.draw_background": "Draw a black gradient background.",
   "string.betterloadingscreen.modname": "Better loading screen",
   "string.betterloadingscreen.general": "General"
 }
