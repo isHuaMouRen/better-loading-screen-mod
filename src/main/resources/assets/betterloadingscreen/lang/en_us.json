@@ -1,6 +1,11 @@
 {
-  "config.betterloadingscreen.draw_background": "Draw a black gradient background.",
+  "config.betterloadingscreen.draw_background": "Draw a black gradient background",
+  "config.betterloadingscreen.draw_background.tooltip": "Draw a black gradient background, fading from bottom to top, behind the loading screen.",
+
   "config.betterloadingscreen.i18n_loading_text": "Localize loading text",
+  "config.betterloadingscreen.i18n_loading_text.tooltip": "Localize \"LOADING...\". For example, display \"LOADING...\" in English and \"加载中...\" in Chinese.",
+
+
   "string.betterloadingscreen.modname": "Better loading screen",
   "string.betterloadingscreen.general": "General",
   "string.betterloadingscreen.loading": "§lLOADING..."

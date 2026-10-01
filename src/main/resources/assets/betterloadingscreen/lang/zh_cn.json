@@ -1,6 +1,11 @@
 {
   "config.betterloadingscreen.draw_background": "绘制黑色渐变背景",
+  "config.betterloadingscreen.draw_background.tooltip": "在加载屏幕后方绘制一个由下至上的黑色渐变背景",
+
   "config.betterloadingscreen.i18n_loading_text": "本地化加载文本",
+  "config.betterloadingscreen.i18n_loading_text.tooltip": "将 \"LOADING...\" 本地化。比如：英文显示 \"LOADING...\"；中文显示 \"加载中...\"",
+
+
   "string.betterloadingscreen.modname": "更好的加载屏幕",
   "string.betterloadingscreen.general": "通用",
   "string.betterloadingscreen.loading": "§l加载中..."

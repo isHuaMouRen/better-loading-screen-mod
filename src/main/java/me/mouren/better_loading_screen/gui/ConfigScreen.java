@@ -26,6 +26,7 @@ public class ConfigScreen {
                                 Component.translatable("config.betterloadingscreen.draw_background"),
                                 config.draw_background
                         )
+                        .setTooltip(Component.translatable("config.betterloadingscreen.draw_background.tooltip"))
                         .setDefaultValue(true)
                         .setSaveConsumer(value -> config.draw_background = value)
                         .build()
@@ -36,6 +37,7 @@ public class ConfigScreen {
                                 Component.translatable("config.betterloadingscreen.i18n_loading_text"),
                                 config.i18n_loading_text
                         )
+                        .setTooltip(Component.translatable("config.betterloadingscreen.i18n_loading_text.tooltip"))
                         .setDefaultValue(false)
                         .setSaveConsumer(value -> config.i18n_loading_text = value)
                         .build()
