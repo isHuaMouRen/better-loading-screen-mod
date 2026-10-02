@@ -25,7 +25,7 @@ public final class ConfigManager {
                 return;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.fillInStackTrace();
         }
 
         BetterLoadingScreen.config = new JsonConfig();
@@ -40,7 +40,7 @@ public final class ConfigManager {
 
             Files.writeString(ConfigPath, json);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.fillInStackTrace();
         }
     }
 }
