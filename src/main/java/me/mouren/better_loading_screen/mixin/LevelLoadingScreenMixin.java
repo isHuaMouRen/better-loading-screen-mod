@@ -6,6 +6,8 @@ import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.LevelLoadTracker;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,8 +17,31 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LevelLoadingScreen.class)
 public class LevelLoadingScreenMixin extends Screen {
 
+    // =========================
+    // 常量
+    // =========================
+
+    private static final int BAR_HEIGHT = 4;
+
+    private static final int GRADIENT_HEIGHT = 100;
+
+    private static final int ANIMATION_SIZE = 10;
+    private static final int ANIMATION_FRAMES = 91;
+    private static final int ANIMATION_FRAME_TIME = 40;
+    private static final int ANIMATION_TEXTURE_HEIGHT = ANIMATION_SIZE * ANIMATION_FRAMES;
+
+    private static final float TEXT_SCALE = 3.0F;
+
+    private static final int TEXT_COLOR = 0xFFFFFFFF;
+    private static final int PROGRESS_BAR_COLOR = 0xFF00FF00;
+
+    private static final Identifier ANIMATION_TEXTURE = Identifier.fromNamespaceAndPath(BetterLoadingScreen.MOD_ID, "textures/gui/loading_animation.png");
+
+    private static final Component DEFAULT_LOADING_TEXT = Component.literal("§lLOADING...");
+
     @Shadow
     private LevelLoadTracker loadTracker;
+
     @Shadow
     private float smoothedProgress;
 
@@ -25,99 +50,156 @@ public class LevelLoadingScreenMixin extends Screen {
     }
 
     @Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
-    private void onExtractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
-        // 拦截原版渲染
+    private void onExtractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
+        // 取消原版渲染
         ci.cancel();
 
-        // 基础布局数据
-        int barHeight = 4;
-        int left = 0;
-        int right = this.width;
-        int bottom = this.height;
-        int top = bottom - barHeight;
+        int width = this.width;
+        int height = this.height;
 
+        int bottom = height;
+        int top = bottom - BAR_HEIGHT;
 
-        //黑色渐变背景
-        if (BetterLoadingScreen.config.draw_background) {
-            int gradientHeight = 100;
-            int gradientTop = this.height - gradientHeight;
+        // 背景
+        renderBackground(graphics, width, height);
 
-            graphics.fillGradient(0, gradientTop, right, bottom, 0x00000000, 0x80000000);
-        }
+        // 进度条
+        var hasProgress = this.loadTracker != null && this.loadTracker.hasProgress();
+        if (hasProgress)
+            renderProgressBar(graphics, width, top, bottom);
 
-        //进度条
-        if (this.loadTracker != null && this.loadTracker.hasProgress()) {
-            int progressBarRight = (int) (this.smoothedProgress * (float) this.width);
-            if (progressBarRight > 0) {
-                graphics.fill(left, top, progressBarRight, bottom, 0xFF00FF00);
-            }
-        }
-
-        // 参数
-        float scale = 3F;
-        int scaledTextHeight = (int) (9 * scale);
+        // 文字布局
+        int scaledTextHeight = (int) (9 * TEXT_SCALE);
         int textY = top - scaledTextHeight - 5;
 
-        int animSize = 10;
-        int scaledAnimSize = (int) (animSize * scale);
-        int animX = this.width - scaledAnimSize - 6;
+        int scaledAnimationSize = (int) (ANIMATION_SIZE * TEXT_SCALE);
+        int animationX = width - scaledAnimationSize - 6;
 
-        // ==========================================
-        // 绘制动态贴图
-        // ==========================================
+        // LOADING
+        renderLoadingText(graphics, textY);
+
+        // 动画
+        renderAnimation(graphics, animationX, textY);
+
+        // 百分比
+        if (hasProgress)
+            renderProgressPercentage(graphics, animationX, textY);
+
+    }
+
+    /**
+     * 绘制底部黑色渐变背景。
+     */
+    private void renderBackground(GuiGraphicsExtractor graphics, int width, int height) {
+        if (!BetterLoadingScreen.config.draw_background)
+            return;
+
+        int gradientTop = height - GRADIENT_HEIGHT;
+
+        graphics.fillGradient(
+                0,
+                gradientTop,
+                width,
+                height,
+                0x00000000,
+                0x80000000
+        );
+    }
+
+    /**
+     * 绘制进度条。
+     */
+    private void renderProgressBar(GuiGraphicsExtractor graphics, int width, int top, int bottom) {
+        int progressBarRight = Mth.clamp(
+                (int) (this.smoothedProgress * width),
+                0,
+                width
+        );
+
+        if (progressBarRight <= 0) {
+            return;
+        }
+
+        graphics.fill(
+                0,
+                top,
+                progressBarRight,
+                bottom,
+                PROGRESS_BAR_COLOR
+        );
+    }
+
+    /**
+     * 绘制加载动画。
+     */
+    private void renderAnimation(GuiGraphicsExtractor graphics, int animationX, int textY) {
+        int currentFrame = (int) ((System.currentTimeMillis() / ANIMATION_FRAME_TIME) % ANIMATION_FRAMES);
+        int textureV = currentFrame * ANIMATION_SIZE;
+
+        float v0 = (float) textureV / ANIMATION_TEXTURE_HEIGHT;
+        float v1 = (float) (textureV + ANIMATION_SIZE) / ANIMATION_TEXTURE_HEIGHT;
+
         graphics.pose().pushMatrix();
-        graphics.pose().translate((float) animX, (float) textY);
-        graphics.pose().scale(scale, scale);
-
-        int totalFrames = 91;
-        int currentFrame = (int) ((System.currentTimeMillis() / 40) % totalFrames);
-        int textureV = currentFrame * animSize;
-
-        net.minecraft.resources.Identifier animationTextureIdentifier = net.minecraft.resources.Identifier.fromNamespaceAndPath(BetterLoadingScreen.MOD_ID, "textures/gui/loading_animation.png");
-
-        float u0 = 0.0F;
-        float u1 = 1.0F;
-        float v0 = (float) textureV / 910.0F;
-        float v1 = (float) (textureV + animSize) / 910.0F;
+        graphics.pose().translate(animationX, textY);
+        graphics.pose().scale(TEXT_SCALE, TEXT_SCALE);
 
         graphics.blit(
-                animationTextureIdentifier,
-                0, 0,
-                animSize, animSize,
-                u0, u1,
-                v0, v1
+                ANIMATION_TEXTURE,
+                0,
+                0,
+                ANIMATION_SIZE,
+                ANIMATION_SIZE,
+                0.0F,
+                1.0F,
+                v0,
+                v1
         );
 
         graphics.pose().popMatrix();
+    }
 
-
-        // ==========================================
-        // 绘制 LOADING
-        // ==========================================
-        Component loadingText = Component.literal("§lLOADING...");
-        if (BetterLoadingScreen.config.i18n_loading_text)
-            loadingText = Component.translatable("string.betterloadingscreen.loading");
+    /**
+     * 绘制 LOADING 文本。
+     */
+    private void renderLoadingText(GuiGraphicsExtractor graphics, int textY) {
+        var loadingText = BetterLoadingScreen.config.i18n_loading_text ? Component.translatable("string.betterloadingscreen.loading") : DEFAULT_LOADING_TEXT;
 
         graphics.pose().pushMatrix();
-        graphics.pose().translate(6.0F, (float) textY);
-        graphics.pose().scale(scale, scale);
-        graphics.text(this.font, loadingText, 0, 0, 0xFFFFFFFF, true);
+        graphics.pose().translate(6.0F, textY);
+        graphics.pose().scale(TEXT_SCALE, TEXT_SCALE);
+
+        graphics.text(
+                this.font,
+                loadingText,
+                0,
+                0,
+                TEXT_COLOR,
+                true
+        );
+
         graphics.pose().popMatrix();
+    }
 
+    /**
+     * 绘制百分比。
+     */
+    private void renderProgressPercentage(GuiGraphicsExtractor graphics, int animationX, int textY) {
+        int progressPercent = Mth.floor(this.loadTracker.serverProgress() * 100.0F);
 
-        // ==========================================
-        // 绘制百分比
-        // ==========================================
-        if (this.loadTracker != null && this.loadTracker.hasProgress()) {
-            int progressPercent = net.minecraft.util.Mth.floor(this.loadTracker.serverProgress() * 100.0F);
-            String percentString = progressPercent + "%"; // 去掉了 "§l"
+        String percentText = progressPercent + "%";
 
-            int rawTextWidth = this.font.width(percentString);
-            int percentX = animX - rawTextWidth - 6;
-            int normalTextY = textY + 18;
+        int textWidth = this.font.width(percentText);
 
-            // 直接渲染
-            graphics.text(this.font, percentString, percentX, normalTextY, 0xFFFFFFFF, true);
-        }
+        int percentX = animationX - textWidth - 6;
+        int percentY = textY + 18;
+
+        graphics.text(
+                this.font,
+                percentText,
+                percentX,
+                percentY,
+                TEXT_COLOR,
+                true
+        );
     }
 }
