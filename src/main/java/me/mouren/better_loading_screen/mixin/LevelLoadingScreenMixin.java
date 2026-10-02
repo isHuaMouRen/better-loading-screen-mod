@@ -4,7 +4,6 @@ import me.mouren.better_loading_screen.BetterLoadingScreen;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.multiplayer.LevelLoadTracker;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -40,9 +39,6 @@ public class LevelLoadingScreenMixin extends Screen {
     private static final Component DEFAULT_LOADING_TEXT = Component.literal("§lLOADING...");
 
     @Shadow
-    private LevelLoadTracker loadTracker;
-
-    @Shadow
     private float smoothedProgress;
 
     protected LevelLoadingScreenMixin(Component title) {
@@ -64,7 +60,7 @@ public class LevelLoadingScreenMixin extends Screen {
         renderBackground(graphics, width, height);
 
         // 进度条
-        var hasProgress = this.loadTracker != null && this.loadTracker.hasProgress();
+        var hasProgress = smoothedProgress > 0.0F;
         if (hasProgress)
             renderProgressBar(graphics, width, top, bottom);
 
@@ -184,7 +180,7 @@ public class LevelLoadingScreenMixin extends Screen {
      * 绘制百分比。
      */
     private void renderProgressPercentage(GuiGraphicsExtractor graphics, int animationX, int textY) {
-        int progressPercent = Mth.floor(this.loadTracker.serverProgress() * 100.0F);
+        int progressPercent = Mth.floor(smoothedProgress * 100.0F);
 
         String percentText = progressPercent + "%";
 

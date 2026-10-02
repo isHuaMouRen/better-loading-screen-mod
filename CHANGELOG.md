@@ -1,5 +1,9 @@
 # Change log
 
+## 1.4.1
+
+- 现在进度条和百分比文字统一使用 `smoothedProgress` 使百分比文字更加平滑
+
 ## 1.4.0
 
 - 现在此mod依赖 `cloth-config >= 26.3.159` 与可选依赖 `modmenu >= 21.0.0`
