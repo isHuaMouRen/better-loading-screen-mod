@@ -26,7 +26,7 @@ public class LevelLoadingScreenMixin extends Screen {
 
     private static final int ANIMATION_SIZE = 10;
     private static final int ANIMATION_FRAMES = 91;
-    private static final int ANIMATION_FRAME_TIME = 40;
+    private static int ANIMATION_FRAME_TIME = BetterLoadingScreen.config.animation_frame_interval;
     private static final int ANIMATION_TEXTURE_HEIGHT = ANIMATION_SIZE * ANIMATION_FRAMES;
 
     private static final float TEXT_SCALE = 3.0F;
@@ -49,6 +49,10 @@ public class LevelLoadingScreenMixin extends Screen {
     private void onExtractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         // 取消原版渲染
         ci.cancel();
+
+        //更新变量
+        if (ANIMATION_FRAME_TIME != BetterLoadingScreen.config.animation_frame_interval)
+            ANIMATION_FRAME_TIME = BetterLoadingScreen.config.animation_frame_interval;
 
         int width = this.width;
         int height = this.height;

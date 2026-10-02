@@ -5,6 +5,8 @@
   "config.betterloadingscreen.i18n_loading_text": "Localize loading text",
   "config.betterloadingscreen.i18n_loading_text.tooltip": "Localize \"LOADING...\". For example, display \"LOADING...\" in English and \"加载中...\" in Chinese.",
 
+  "config.betterloadingscreen.animation_frame_interval": "Loading animation playback interval",
+  "config.betterloadingscreen.animation_frame_interval.tooltip": "The playback interval of the animation in the bottom right corner: the smaller the interval, the faster it plays. The larger the interval, the slower it plays.",
 
   "string.betterloadingscreen.modname": "Better loading screen",
   "string.betterloadingscreen.general": "General",

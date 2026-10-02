@@ -5,6 +5,8 @@
   "config.betterloadingscreen.i18n_loading_text": "本地化加载文本",
   "config.betterloadingscreen.i18n_loading_text.tooltip": "将 \"LOADING...\" 本地化。比如：英文显示 \"LOADING...\"；中文显示 \"加载中...\"",
 
+  "config.betterloadingscreen.animation_frame_interval": "加载动画播放间隔",
+  "config.betterloadingscreen.animation_frame_interval.tooltip": "右下角动画的播放间隔，间隔越小，播放的越快。间隔越大，播放的越慢",
 
   "string.betterloadingscreen.modname": "更好的加载屏幕",
   "string.betterloadingscreen.general": "通用",

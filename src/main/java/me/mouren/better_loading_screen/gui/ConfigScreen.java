@@ -41,6 +41,16 @@ public class ConfigScreen {
                         .setDefaultValue(false)
                         .setSaveConsumer(value -> config.i18n_loading_text = value)
                         .build()
+        );general.addEntry(
+                builder.entryBuilder()
+                        .startIntField(
+                                Component.translatable("config.betterloadingscreen.animation_frame_interval"),
+                                config.animation_frame_interval
+                        )
+                        .setTooltip(Component.translatable("config.betterloadingscreen.animation_frame_interval.tooltip"))
+                        .setDefaultValue(40)
+                        .setSaveConsumer(value -> config.animation_frame_interval = value)
+                        .build()
         );
 
         return builder.build();
