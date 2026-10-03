@@ -22,7 +22,7 @@ public class Main implements ModInitializer {
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
 
-        LOGGER.info("=====Initializing Better loading screen...=====");
+        //LOGGER.info("=====Initializing Better loading screen...=====");
 
         ConfigManager.load();
 
