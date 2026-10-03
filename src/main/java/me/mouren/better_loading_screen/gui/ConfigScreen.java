@@ -2,6 +2,7 @@ package me.mouren.better_loading_screen.gui;
 
 import me.mouren.better_loading_screen.Main;
 import me.mouren.better_loading_screen.models.JsonConfig;
+import me.mouren.better_loading_screen.models.animation.AnimationType;
 import me.mouren.better_loading_screen.utils.ConfigManager;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import net.minecraft.client.gui.screens.Screen;
@@ -41,7 +42,8 @@ public class ConfigScreen {
                         .setDefaultValue(false)
                         .setSaveConsumer(value -> config.i18n_loading_text = value)
                         .build()
-        );general.addEntry(
+        );
+        general.addEntry(
                 builder.entryBuilder()
                         .startIntField(
                                 Component.translatable("config.betterloadingscreen.animation_frame_interval"),
@@ -50,6 +52,18 @@ public class ConfigScreen {
                         .setTooltip(Component.translatable("config.betterloadingscreen.animation_frame_interval.tooltip"))
                         .setDefaultValue(40)
                         .setSaveConsumer(value -> config.animation_frame_interval = value)
+                        .build()
+        );
+        general.addEntry(
+                builder.entryBuilder()
+                        .startEnumSelector(
+                                Component.translatable("config.betterloadingscreen.animation_type"),
+                                AnimationType.class,
+                                config.animation_type
+                        )
+                        .setTooltip(Component.translatable("config.betterloadingscreen.animation_type.tooltip"))
+                        .setDefaultValue(AnimationType.ANIMATION)
+                        .setSaveConsumer(value -> config.animation_type = value)
                         .build()
         );
 

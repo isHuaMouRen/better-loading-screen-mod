@@ -8,6 +8,10 @@
   "config.betterloadingscreen.animation_frame_interval": "Loading animation playback interval",
   "config.betterloadingscreen.animation_frame_interval.tooltip": "The playback interval of the animation in the bottom right corner: the smaller the interval, the faster it plays. The larger the interval, the slower it plays.",
 
+  "config.betterloadingscreen.animation_type": "Loading animation type",
+  "config.betterloadingscreen.animation_type.tooltip": "Types of animations in the bottom right corner\n\nANIMATION: The change animation from Pickaxe -> Axe -> Shovel\nSPIN: The classic loading spin animation",
+
+
   "string.betterloadingscreen.modname": "Better loading screen",
   "string.betterloadingscreen.general": "General",
   "string.betterloadingscreen.loading": "§lLOADING..."

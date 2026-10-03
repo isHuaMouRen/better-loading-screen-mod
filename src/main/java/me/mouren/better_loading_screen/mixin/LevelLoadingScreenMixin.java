@@ -1,11 +1,13 @@
 package me.mouren.better_loading_screen.mixin;
 
 import me.mouren.better_loading_screen.Main;
+import me.mouren.better_loading_screen.models.animation.AnimationInfo;
+import me.mouren.better_loading_screen.models.animation.Animations;
+import me.mouren.better_loading_screen.models.animation.AnimationType;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,20 +23,12 @@ public class LevelLoadingScreenMixin extends Screen {
     // =========================
 
     private static final int BAR_HEIGHT = 4;
-
     private static final int GRADIENT_HEIGHT = 100;
-
-    private static final int ANIMATION_SIZE = 10;
-    private static final int ANIMATION_FRAMES = 91;
-    private static int ANIMATION_FRAME_TIME = Main.config.animation_frame_interval;
-    private static final int ANIMATION_TEXTURE_HEIGHT = ANIMATION_SIZE * ANIMATION_FRAMES;
 
     private static final float TEXT_SCALE = 3.0F;
 
     private static final int TEXT_COLOR = 0xFFFFFFFF;
     private static final int PROGRESS_BAR_COLOR = 0xFF00FF00;
-
-    private static final Identifier ANIMATION_TEXTURE = Identifier.fromNamespaceAndPath(Main.MOD_ID, "textures/gui/loading_animation.png");
 
     private static final Component DEFAULT_LOADING_TEXT = Component.literal("§lLOADING...");
 
@@ -50,10 +44,6 @@ public class LevelLoadingScreenMixin extends Screen {
         // 取消原版渲染
         ci.cancel();
 
-        //更新变量
-        if (ANIMATION_FRAME_TIME != Main.config.animation_frame_interval)
-            ANIMATION_FRAME_TIME = Main.config.animation_frame_interval;
-
         int width = this.width;
         int height = this.height;
 
@@ -64,27 +54,40 @@ public class LevelLoadingScreenMixin extends Screen {
         renderBackground(graphics, width, height);
 
         // 进度条
-        var hasProgress = smoothedProgress > 0.0F;
+        boolean hasProgress = smoothedProgress > 0.0F;
         if (hasProgress)
             renderProgressBar(graphics, width, top, bottom);
+
+        // 当前动画
+        AnimationInfo animation = getAnimation();
 
         // 文字布局
         int scaledTextHeight = (int) (9 * TEXT_SCALE);
         int textY = top - scaledTextHeight - 5;
 
-        int scaledAnimationSize = (int) (ANIMATION_SIZE * TEXT_SCALE);
-        int animationX = width - scaledAnimationSize - 6;
+        int scaledAnimationWidth = (int) (animation.width() * TEXT_SCALE);
+        int animationX = width - scaledAnimationWidth - 6;
 
         // LOADING
         renderLoadingText(graphics, textY);
 
         // 动画
-        renderAnimation(graphics, animationX, textY);
+        renderAnimation(graphics, animation, animationX, textY);
 
         // 百分比
         if (hasProgress)
             renderProgressPercentage(graphics, animationX, textY);
 
+    }
+
+    /**
+     * 获取当前配置选择的动画。
+     */
+    private AnimationInfo getAnimation() {
+        return switch (Main.config.animation_type) {
+            case ANIMATION -> Animations.ANIMATION;
+            case SPIN -> Animations.SPIN;
+        };
     }
 
     /**
@@ -132,23 +135,33 @@ public class LevelLoadingScreenMixin extends Screen {
     /**
      * 绘制加载动画。
      */
-    private void renderAnimation(GuiGraphicsExtractor graphics, int animationX, int textY) {
-        int currentFrame = (int) ((System.currentTimeMillis() / ANIMATION_FRAME_TIME) % ANIMATION_FRAMES);
-        int textureV = currentFrame * ANIMATION_SIZE;
+    private void renderAnimation(GuiGraphicsExtractor graphics, AnimationInfo animation, int animationX, int textY) {
+        int frameTime = (int) (Main.config.animation_frame_interval * animation.frame_interval_scale());
 
-        float v0 = (float) textureV / ANIMATION_TEXTURE_HEIGHT;
-        float v1 = (float) (textureV + ANIMATION_SIZE) / ANIMATION_TEXTURE_HEIGHT;
+        int currentFrame =
+                (int) ((System.currentTimeMillis() / frameTime)
+                        % animation.frame());
+
+        int textureV = currentFrame * animation.height();
+
+        int textureHeight = animation.height() * animation.frame();
+
+        float v0 = (float) textureV / textureHeight;
+        float v1 =
+                (float) (textureV + animation.height())
+                        / textureHeight;
 
         graphics.pose().pushMatrix();
+
         graphics.pose().translate(animationX, textY);
         graphics.pose().scale(TEXT_SCALE, TEXT_SCALE);
 
         graphics.blit(
-                ANIMATION_TEXTURE,
+                animation.resource(),
                 0,
                 0,
-                ANIMATION_SIZE,
-                ANIMATION_SIZE,
+                animation.width(),
+                animation.height(),
                 0.0F,
                 1.0F,
                 v0,
@@ -162,7 +175,10 @@ public class LevelLoadingScreenMixin extends Screen {
      * 绘制 LOADING 文本。
      */
     private void renderLoadingText(GuiGraphicsExtractor graphics, int textY) {
-        var loadingText = Main.config.i18n_loading_text ? Component.translatable("string.betterloadingscreen.loading") : DEFAULT_LOADING_TEXT;
+        var loadingText =
+                Main.config.i18n_loading_text ?
+                        Component.translatable("string.betterloadingscreen.loading")
+                        : DEFAULT_LOADING_TEXT;
 
         graphics.pose().pushMatrix();
         graphics.pose().translate(6.0F, textY);
