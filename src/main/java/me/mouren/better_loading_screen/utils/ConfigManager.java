@@ -2,7 +2,7 @@ package me.mouren.better_loading_screen.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import me.mouren.better_loading_screen.BetterLoadingScreen;
+import me.mouren.better_loading_screen.Main;
 import me.mouren.better_loading_screen.JsonConfig;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -21,14 +21,14 @@ public final class ConfigManager {
         try {
             if (Files.exists(ConfigPath)) {
                 String json = Files.readString(ConfigPath);
-                BetterLoadingScreen.config = GSON.fromJson(json, JsonConfig.class);
+                Main.config = GSON.fromJson(json, JsonConfig.class);
                 return;
             }
         } catch (Exception e) {
             e.fillInStackTrace();
         }
 
-        BetterLoadingScreen.config = new JsonConfig();
+        Main.config = new JsonConfig();
         save();
     }
 
@@ -36,7 +36,7 @@ public final class ConfigManager {
         try {
             Files.createDirectories(ConfigPath.getParent());
 
-            String json = GSON.toJson(BetterLoadingScreen.config);
+            String json = GSON.toJson(Main.config);
 
             Files.writeString(ConfigPath, json);
         } catch (IOException e) {

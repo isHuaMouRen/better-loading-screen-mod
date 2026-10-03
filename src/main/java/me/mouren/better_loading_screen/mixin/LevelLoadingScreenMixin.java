@@ -1,6 +1,6 @@
 package me.mouren.better_loading_screen.mixin;
 
-import me.mouren.better_loading_screen.BetterLoadingScreen;
+import me.mouren.better_loading_screen.Main;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -26,7 +26,7 @@ public class LevelLoadingScreenMixin extends Screen {
 
     private static final int ANIMATION_SIZE = 10;
     private static final int ANIMATION_FRAMES = 91;
-    private static int ANIMATION_FRAME_TIME = BetterLoadingScreen.config.animation_frame_interval;
+    private static int ANIMATION_FRAME_TIME = Main.config.animation_frame_interval;
     private static final int ANIMATION_TEXTURE_HEIGHT = ANIMATION_SIZE * ANIMATION_FRAMES;
 
     private static final float TEXT_SCALE = 3.0F;
@@ -34,7 +34,7 @@ public class LevelLoadingScreenMixin extends Screen {
     private static final int TEXT_COLOR = 0xFFFFFFFF;
     private static final int PROGRESS_BAR_COLOR = 0xFF00FF00;
 
-    private static final Identifier ANIMATION_TEXTURE = Identifier.fromNamespaceAndPath(BetterLoadingScreen.MOD_ID, "textures/gui/loading_animation.png");
+    private static final Identifier ANIMATION_TEXTURE = Identifier.fromNamespaceAndPath(Main.MOD_ID, "textures/gui/loading_animation.png");
 
     private static final Component DEFAULT_LOADING_TEXT = Component.literal("§lLOADING...");
 
@@ -51,8 +51,8 @@ public class LevelLoadingScreenMixin extends Screen {
         ci.cancel();
 
         //更新变量
-        if (ANIMATION_FRAME_TIME != BetterLoadingScreen.config.animation_frame_interval)
-            ANIMATION_FRAME_TIME = BetterLoadingScreen.config.animation_frame_interval;
+        if (ANIMATION_FRAME_TIME != Main.config.animation_frame_interval)
+            ANIMATION_FRAME_TIME = Main.config.animation_frame_interval;
 
         int width = this.width;
         int height = this.height;
@@ -91,7 +91,7 @@ public class LevelLoadingScreenMixin extends Screen {
      * 绘制底部黑色渐变背景。
      */
     private void renderBackground(GuiGraphicsExtractor graphics, int width, int height) {
-        if (!BetterLoadingScreen.config.draw_background)
+        if (!Main.config.draw_background)
             return;
 
         int gradientTop = height - GRADIENT_HEIGHT;
@@ -162,7 +162,7 @@ public class LevelLoadingScreenMixin extends Screen {
      * 绘制 LOADING 文本。
      */
     private void renderLoadingText(GuiGraphicsExtractor graphics, int textY) {
-        var loadingText = BetterLoadingScreen.config.i18n_loading_text ? Component.translatable("string.betterloadingscreen.loading") : DEFAULT_LOADING_TEXT;
+        var loadingText = Main.config.i18n_loading_text ? Component.translatable("string.betterloadingscreen.loading") : DEFAULT_LOADING_TEXT;
 
         graphics.pose().pushMatrix();
         graphics.pose().translate(6.0F, textY);

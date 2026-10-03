@@ -3,15 +3,10 @@ package me.mouren.better_loading_screen;
 import me.mouren.better_loading_screen.utils.ConfigManager;
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-public class BetterLoadingScreen implements ModInitializer {
+public class Main implements ModInitializer {
     public static final String MOD_ID = "betterloadingscreen";
 
     // This logger is used to write text to the console and the log file.

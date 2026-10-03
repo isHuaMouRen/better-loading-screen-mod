@@ -1,6 +1,6 @@
 package me.mouren.better_loading_screen.gui;
 
-import me.mouren.better_loading_screen.BetterLoadingScreen;
+import me.mouren.better_loading_screen.Main;
 import me.mouren.better_loading_screen.JsonConfig;
 import me.mouren.better_loading_screen.utils.ConfigManager;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
@@ -9,7 +9,7 @@ import net.minecraft.network.chat.Component;
 
 public class ConfigScreen {
     public static Screen create(Screen parent) {
-        JsonConfig config = BetterLoadingScreen.config;
+        JsonConfig config = Main.config;
 
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
