@@ -9,7 +9,7 @@
   "config.betterloadingscreen.animation_frame_interval.tooltip": "右下角动画的播放间隔，间隔越小，播放的越快。间隔越大，播放的越慢",
 
   "config.betterloadingscreen.animation_type": "加载动画类型",
-  "config.betterloadingscreen.animation_type.tooltip": "右下角动画的类型\n\nANIMATION: 稿子->斧头->铲子 的变化动画\nSPIN: 经典的加载转圈动画",
+  "config.betterloadingscreen.animation_type.tooltip": "右下角动画的类型\n\n\u00a7lANIMATION:\u00a7r 稿子->斧头->铲子 的变化动画\n\u00a7lSPIN:\u00a7r 经典的加载转圈动画",
 
 
   "string.betterloadingscreen.modname": "更好的加载屏幕",
