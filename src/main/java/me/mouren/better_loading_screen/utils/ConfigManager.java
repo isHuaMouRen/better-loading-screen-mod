@@ -3,7 +3,7 @@ package me.mouren.better_loading_screen.utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.mouren.better_loading_screen.Main;
-import me.mouren.better_loading_screen.JsonConfig;
+import me.mouren.better_loading_screen.models.JsonConfig;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.IOException;

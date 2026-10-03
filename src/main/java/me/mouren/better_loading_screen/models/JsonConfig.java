@@ -1,4 +1,4 @@
-package me.mouren.better_loading_screen;
+package me.mouren.better_loading_screen.models;
 
 public class JsonConfig {
     public boolean draw_background = true;

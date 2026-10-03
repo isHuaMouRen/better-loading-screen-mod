@@ -1,5 +1,6 @@
 package me.mouren.better_loading_screen;
 
+import me.mouren.better_loading_screen.models.JsonConfig;
 import me.mouren.better_loading_screen.utils.ConfigManager;
 import net.fabricmc.api.ModInitializer;
 

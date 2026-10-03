@@ -1,7 +1,7 @@
 package me.mouren.better_loading_screen.gui;
 
 import me.mouren.better_loading_screen.Main;
-import me.mouren.better_loading_screen.JsonConfig;
+import me.mouren.better_loading_screen.models.JsonConfig;
 import me.mouren.better_loading_screen.utils.ConfigManager;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import net.minecraft.client.gui.screens.Screen;
