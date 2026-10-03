@@ -24,7 +24,6 @@ public class LevelLoadingScreenMixin extends Screen {
     // =========================
 
     private static final int BAR_HEIGHT = 4;
-    private static final int GRADIENT_HEIGHT = 100;
 
     private static final float TEXT_SCALE = 3.0F;
 
@@ -100,7 +99,7 @@ public class LevelLoadingScreenMixin extends Screen {
         if (!Main.config.draw_background)
             return;
 
-        int gradientTop = height - GRADIENT_HEIGHT;
+        int gradientTop = height / 3;
 
         graphics.fillGradient(
                 0,
