@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -78,6 +79,8 @@ public class LevelLoadingScreenMixin extends Screen {
         if (hasProgress)
             renderProgressPercentage(graphics, animationX, textY);
 
+        // Minecraft logo
+        renderMinecraftLogo(graphics, width);
     }
 
     /**
@@ -216,6 +219,32 @@ public class LevelLoadingScreenMixin extends Screen {
                 percentY,
                 TEXT_COLOR,
                 true
+        );
+    }
+
+    /**
+     * 绘制 Minecraft Logo。
+     */
+    private void renderMinecraftLogo(GuiGraphicsExtractor graphics, int width) {
+        if (!Main.config.draw_minecraft_logo)
+            return;
+
+        int logoWidth = 256;
+        int logoHeight = 64;
+
+        int logoX = (width - logoWidth) / 2;
+        int logoY = 25;
+
+        graphics.blit(
+                Identifier.withDefaultNamespace("textures/gui/title/minecraft.png"),
+                logoX,
+                logoY,
+                logoX + logoWidth,
+                logoY + logoHeight,
+                0.0F,
+                1.0F,
+                0.0F,
+                1.0F
         );
     }
 }

@@ -1,4 +1,7 @@
 {
+  "config.betterloadingscreen.draw_minecraft_logo": "绘制Minecraft微标",
+  "config.betterloadingscreen.draw_minecraft_logo.tooltip": "在屏幕上方绘制Minecraft微标",
+
   "config.betterloadingscreen.draw_background": "绘制黑色渐变背景",
   "config.betterloadingscreen.draw_background.tooltip": "在加载屏幕后方绘制一个由下至上的黑色渐变背景",
 

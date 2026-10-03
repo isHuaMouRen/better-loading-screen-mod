@@ -24,6 +24,16 @@ public class ConfigScreen {
         general.addEntry(
                 builder.entryBuilder()
                         .startBooleanToggle(
+                                Component.translatable("config.betterloadingscreen.draw_minecraft_logo"),
+                                config.draw_minecraft_logo
+                        )
+                        .setTooltip(Component.translatable("config.betterloadingscreen.draw_minecraft_logo.tooltip"))
+                        .setDefaultValue(false)
+                        .setSaveConsumer(value -> config.draw_minecraft_logo = value)
+                        .build()
+        );general.addEntry(
+                builder.entryBuilder()
+                        .startBooleanToggle(
                                 Component.translatable("config.betterloadingscreen.draw_background"),
                                 config.draw_background
                         )
