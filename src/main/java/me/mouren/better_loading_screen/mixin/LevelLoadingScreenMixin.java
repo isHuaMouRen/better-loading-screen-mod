@@ -44,6 +44,8 @@ public class LevelLoadingScreenMixin extends Screen {
         // 取消原版渲染
         ci.cancel();
 
+        boolean hasProgress = smoothedProgress > 0.0F;
+
         int width = this.width;
         int height = this.height;
 
@@ -51,10 +53,10 @@ public class LevelLoadingScreenMixin extends Screen {
         int top = bottom - BAR_HEIGHT;
 
         // 背景
-        renderBackground(graphics, width, height);
+        if (Main.config.draw_background)
+            renderBackground(graphics, width, height);
 
         // 进度条
-        boolean hasProgress = smoothedProgress > 0.0F;
         if (hasProgress)
             renderProgressBar(graphics, width, top, bottom);
 
@@ -79,7 +81,8 @@ public class LevelLoadingScreenMixin extends Screen {
             renderProgressPercentage(graphics, animationX, textY);
 
         // Minecraft logo
-        renderMinecraftLogo(graphics, width);
+        if (Main.config.draw_minecraft_logo)
+            renderMinecraftLogo(graphics, width);
     }
 
     /**
@@ -96,9 +99,6 @@ public class LevelLoadingScreenMixin extends Screen {
      * 绘制底部黑色渐变背景。
      */
     private void renderBackground(GuiGraphicsExtractor graphics, int width, int height) {
-        if (!Main.config.draw_background)
-            return;
-
         int gradientTop = height / 3;
 
         graphics.fillGradient(
@@ -225,9 +225,6 @@ public class LevelLoadingScreenMixin extends Screen {
      * 绘制 Minecraft Logo。
      */
     private void renderMinecraftLogo(GuiGraphicsExtractor graphics, int width) {
-        if (!Main.config.draw_minecraft_logo)
-            return;
-
         int logoWidth = 256;
         int logoHeight = 64;
 
