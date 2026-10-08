@@ -2,6 +2,9 @@
   "config.betterloadingscreen.draw_minecraft_logo": "绘制Minecraft微标",
   "config.betterloadingscreen.draw_minecraft_logo.tooltip": "在屏幕上方绘制Minecraft微标",
 
+  "config.betterloadingscreen.draw_vanilla_chunks": "绘制原版加载动画",
+  "config.betterloadingscreen.draw_vanilla_chunks.tooltip": "在LOADING字样的上方绘制原版游戏的加载动画\n(仅在载入世界时显示，切换维度时不影响)",
+
   "config.betterloadingscreen.draw_background": "绘制黑色渐变背景",
   "config.betterloadingscreen.draw_background.tooltip": "在加载屏幕后方绘制一个由下至上的黑色渐变背景",
 

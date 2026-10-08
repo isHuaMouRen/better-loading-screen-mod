@@ -31,7 +31,19 @@ public class ConfigScreen {
                         .setDefaultValue(false)
                         .setSaveConsumer(value -> config.draw_minecraft_logo = value)
                         .build()
-        );general.addEntry(
+        );
+        general.addEntry(
+                builder.entryBuilder()
+                        .startBooleanToggle(
+                                Component.translatable("config.betterloadingscreen.draw_vanilla_chunks"),
+                                config.draw_vanilla_chunks
+                        )
+                        .setTooltip(Component.translatable("config.betterloadingscreen.draw_vanilla_chunks.tooltip"))
+                        .setDefaultValue(false)
+                        .setSaveConsumer(value -> config.draw_vanilla_chunks = value)
+                        .build()
+        );
+        general.addEntry(
                 builder.entryBuilder()
                         .startBooleanToggle(
                                 Component.translatable("config.betterloadingscreen.draw_background"),

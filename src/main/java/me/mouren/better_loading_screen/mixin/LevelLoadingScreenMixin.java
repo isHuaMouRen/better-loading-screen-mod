@@ -7,6 +7,7 @@ import me.mouren.better_loading_screen.models.animation.AnimationType;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.multiplayer.LevelLoadTracker;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -34,6 +35,8 @@ public class LevelLoadingScreenMixin extends Screen {
 
     @Shadow
     private float smoothedProgress;
+    @Shadow
+    private LevelLoadTracker loadTracker;
 
     protected LevelLoadingScreenMixin(Component title) {
         super(title);
@@ -83,6 +86,10 @@ public class LevelLoadingScreenMixin extends Screen {
         // Minecraft logo
         if (Main.config.draw_minecraft_logo)
             renderMinecraftLogo(graphics, width);
+
+        // Vanilla loading animation
+        if (Main.config.draw_vanilla_chunks)
+            renderVanillaAnimation(graphics, textY);
     }
 
     /**
@@ -241,6 +248,35 @@ public class LevelLoadingScreenMixin extends Screen {
                 1.0F,
                 0.0F,
                 1.0F
+        );
+    }
+
+    /**
+     * 绘制原版加载动画
+     */
+    private void renderVanillaAnimation(GuiGraphicsExtractor graphics, int textY
+    ) {
+        var statusView = loadTracker.statusView();
+
+        if (statusView == null)
+            return;
+
+        int size = 2;
+        int margin = 0;
+
+        int diameter = statusView.radius() * 2 + 1;
+        int totalWidth = diameter * (size + margin) - margin;
+
+        int xCenter = 6 + totalWidth / 2;
+        int yCenter = textY - totalWidth / 2 - 5;
+
+        LevelLoadingScreen.extractChunksForRendering(
+                graphics,
+                xCenter,
+                yCenter,
+                size,
+                margin,
+                statusView
         );
     }
 }

@@ -2,6 +2,9 @@
   "config.betterloadingscreen.draw_minecraft_logo": "Draw Minecraft logo",
   "config.betterloadingscreen.draw_minecraft_logo.tooltip": "Draw a Minecraft logo at the top of the screen",
 
+  "config.betterloadingscreen.draw_vanilla_chunks": "Draw vanilla load animation",
+  "config.betterloadingscreen.draw_vanilla_chunks.tooltip": "Draw the vanilla game's loading animation above the \"LOADING\" text.\n(Displayed only when loading the world; unaffected when switching dimensions.)",
+
   "config.betterloadingscreen.draw_background": "Draw a black gradient background",
   "config.betterloadingscreen.draw_background.tooltip": "Draw a black gradient background, fading from bottom to top, behind the loading screen.",
 
