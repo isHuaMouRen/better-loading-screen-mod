@@ -56,8 +56,7 @@ public class LevelLoadingScreenMixin extends Screen {
         int top = bottom - BAR_HEIGHT;
 
         // 背景
-        if (Main.config.draw_background)
-            renderBackground(graphics, width, height);
+        renderBackground(graphics, width, height);
 
         // 进度条
         if (hasProgress)

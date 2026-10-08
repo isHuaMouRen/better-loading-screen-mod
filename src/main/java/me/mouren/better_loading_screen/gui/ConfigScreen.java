@@ -46,17 +46,6 @@ public class ConfigScreen {
         general.addEntry(
                 builder.entryBuilder()
                         .startBooleanToggle(
-                                Component.translatable("config.betterloadingscreen.draw_background"),
-                                config.draw_background
-                        )
-                        .setTooltip(Component.translatable("config.betterloadingscreen.draw_background.tooltip"))
-                        .setDefaultValue(true)
-                        .setSaveConsumer(value -> config.draw_background = value)
-                        .build()
-        );
-        general.addEntry(
-                builder.entryBuilder()
-                        .startBooleanToggle(
                                 Component.translatable("config.betterloadingscreen.i18n_loading_text"),
                                 config.i18n_loading_text
                         )
