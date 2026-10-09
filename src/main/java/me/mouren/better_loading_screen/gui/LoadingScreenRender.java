@@ -74,9 +74,9 @@ public final class LoadingScreenRender {
     /**
      * 绘制 LOADING 文本。
      */
-    public static void renderText(GuiGraphicsExtractor graphics, ScreenSize size, Font font, Component text, float scale, int y) {
+    public static void renderText(GuiGraphicsExtractor graphics, ScreenSize size, Font font, Component text, float scale,int x, int y) {
         graphics.pose().pushMatrix();
-        graphics.pose().translate(6.0F, y);
+        graphics.pose().translate(x, y);
         graphics.pose().scale(scale, scale);
 
         graphics.text(font, text, 0, 0, 0xFFFFFFFF, true);

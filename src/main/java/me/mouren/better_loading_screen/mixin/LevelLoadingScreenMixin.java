@@ -54,7 +54,7 @@ public class LevelLoadingScreenMixin extends Screen {
 
         //LOADING
         var loadingText = Main.config.i18n_loading_text ? Component.translatable("string.betterloadingscreen.loading") : LoadingScreenRender.DEFAULT_LOADING_TEXT;
-        LoadingScreenRender.renderText(graphics, screenSize, this.font, loadingText, textScale, textY);
+        LoadingScreenRender.renderText(graphics, screenSize, this.font, loadingText, textScale, 6, textY);
 
         // 动画
         LoadingScreenRender.renderAnimation(
