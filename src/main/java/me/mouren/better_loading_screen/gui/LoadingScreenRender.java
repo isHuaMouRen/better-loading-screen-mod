@@ -74,14 +74,12 @@ public final class LoadingScreenRender {
     /**
      * 绘制 LOADING 文本。
      */
-    public static void renderLoadingText(GuiGraphicsExtractor graphics, ScreenSize size, Font font, float scale, int y) {
-        var loadingText = Main.config.i18n_loading_text ? Component.translatable("string.betterloadingscreen.loading") : DEFAULT_LOADING_TEXT;
-
+    public static void renderText(GuiGraphicsExtractor graphics, ScreenSize size, Font font, Component text, float scale, int y) {
         graphics.pose().pushMatrix();
         graphics.pose().translate(6.0F, y);
         graphics.pose().scale(scale, scale);
 
-        graphics.text(font, loadingText, 0, 0, 0xFFFFFFFF, true);
+        graphics.text(font, text, 0, 0, 0xFFFFFFFF, true);
 
         graphics.pose().popMatrix();
     }
